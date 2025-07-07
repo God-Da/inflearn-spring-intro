@@ -15,3 +15,7 @@
 - 회원 등록/조회 기능
 - H2 DB 연동
 - Thymeleaf 템플릿 사용
+
+## 배운 단축키
+shift+F6: rename
+ctrl+alt+V: Extract -> Introduce Variable (선택한 표현식(expression)을 새로운 변수로 추출)
