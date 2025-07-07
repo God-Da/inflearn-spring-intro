@@ -17,5 +17,5 @@
 - Thymeleaf 템플릿 사용
 
 ## 배운 단축키
-shift+F6: rename
+shift+F6: rename <br>
 ctrl+alt+V: Extract -> Introduce Variable (선택한 표현식(expression)을 새로운 변수로 추출)
