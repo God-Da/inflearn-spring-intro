@@ -1,39 +1,33 @@
-//단위테스트: 이게 더 좋은 테스트일 확률이 높음 이렇게 단위별로 테스트 할 수 있도록 연습해야함
+//통합테스트
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-class MemberServiceTest {
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository= new MemoryMemberRepository();
-        memberService=new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach() {
-        memberRepository.clearStore(); // 각 테스트 후 저장소를 비워줌
-    }
-
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
+//    테스트만 하고 끝이기 때문에 테스트 케이스 할 때엔 필드 기반 오토와이어로 하면 편하다
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
     void 회원가입() {
         //given(주어진것)
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring");
 
         //when(실행할것)
         Long saveId = memberService.join(member);
@@ -56,23 +50,6 @@ class MemberServiceTest {
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-/*
-        try{
-            memberService.join(member2);
-            fail();
-        }catch(IllegalStateException e){
-            assertThat(e.getMessage()).isEqualTo("이미 조재하는 회원입니다.");
-        }
-*/
-        //then
 
-    }
-
-    @Test
-    void 회원조회() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
